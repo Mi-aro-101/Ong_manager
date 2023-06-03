@@ -7,5 +7,32 @@
             $valiny = "select * from ong";
             return select;
         }
+
+        public function getCountries(){
+            $this->load->database("mysql");
+            $query = "SELECT nameCountry FROM Countries";
+            $queryexec = $this->db->query($query);
+            $country = array();
+            
+            foreach($queryexec->result_array() as $row){
+                $country[] = $row;
+            }
+
+            return $country;
+        }
+
+        public function getSuggestions($query){
+            $this->load->database("mysql");
+            $fullquery = "SELECT nameCountry FROM Countries WHERE nameCountry LIKE %s";
+            $queryExec = sprintf($queryExec, $query);
+            $queryExec = $this->db->query($fullquery);
+            $suggest = array();
+
+            foreach($queryExec->result_array() as $row){
+                $suggest[] = $row;
+            }
+
+            return $suggest;
+        }
     }
 ?>
