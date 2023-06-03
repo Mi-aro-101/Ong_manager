@@ -1,9 +1,11 @@
-
+<link rel="stylesheet" href=<?php echo base_url("css/Nouvelle_ONG.css");?> >
 <div class="content">
     <center><h1>Fiche de renseignement sur l'ONG mere</h1></center>
     <form action="" method="post">
         <p>Denomination : <input type="text" name="Denomination"></p>
         <p>Date de creation : <input type="date" name="Date_de_creation"></p>
+
+        <?php echo $Countries[0]['nameCountry']; ?>
 
         <p>
             Nationalite : <input type="text" name="Nationalite" id="country" autocomplete=off>
@@ -18,33 +20,38 @@
         <p>Mode de donations financieres : <input type="text" name="Mode_de_donations_financieres"></p>
         <p>Organigramme de l'organisation : <input type="text" name="Organigramme_de_l_organisation"></p>
         <center><button type="submit">Valider</button></center><br>
+        <p id="huhu"></p>
     </form>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 jQuery(document).ready(function() {
-  $("#country").on("input", function() {
-    var query = $(this).val(); // Get the value of the input field
+    $("#country").on("input", function() {
+        var query = $(this).val(); // Get the value of the input field
 
-    // Make an AJAX request to the server to retrieve the suggestions
-    $.ajax({
-      url: "<?php echo base_url('index.php/Ong_mere/suggestCountry'); ?>",
-      method: "POST",
-      data: { query: query },
-      dataType: "json",
-      success: function(response) {
-        var suggestions = response.suggestions;
-        $("#suggestions").empty();
-
-        suggestions.forEach(function(suggestion) {
-          var listItem = $("<li>").text(suggestion);
-          $("#suggestions").append(listItem);
+        // Make an AJAX request to the server to retrieve the suggestions
+        $.ajax({
+            url: "<?php echo site_url('Ong_mere/suggestCountry'); ?>",
+            method: "POST",
+            data: { query: query },
+            dataType: "json",
+            success: function(response) {
+                var suggestions = response.suggestions;
+                $("#suggestions").empty();
+                
+                suggestions.forEach(function(suggestion) {
+                    var listItem = $("<li>").text(suggestion.nameCountry);
+                    listItem.on("click", function() {
+                        $("#country").val(suggestion.nameCountry);
+                        $("#suggestions").empty();
+                    });
+                    $("#suggestions").append(listItem);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.log("Error:", error);
+            }
         });
-      },
-      error: function(xhr, status, error) {
-        console.log("Error:", error);
-      }
     });
-  });
 });
 </script>

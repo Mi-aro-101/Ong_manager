@@ -1,0 +1,16 @@
+#suggestions {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  #suggestions li {
+    cursor: pointer;
+    padding: 5px;
+    border: 1px solid black;
+    width: 30%;
+  }
+  
+  #suggestions li:hover {
+    background-color: lightgray;
+  }

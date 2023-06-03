@@ -23,9 +23,9 @@
 
         public function getSuggestions($query){
             $this->load->database("mysql");
-            $fullquery = "SELECT nameCountry FROM Countries WHERE nameCountry LIKE %s";
-            $queryExec = sprintf($queryExec, $query);
-            $queryExec = $this->db->query($fullquery);
+            $fullquery = "SELECT nameCountry FROM Countries WHERE nameCountry LIKE '%s'";
+            $queryExec = sprintf($fullquery, '%'.$query."%");
+            $queryExec = $this->db->query($queryExec);
             $suggest = array();
 
             foreach($queryExec->result_array() as $row){

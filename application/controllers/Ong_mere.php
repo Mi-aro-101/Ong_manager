@@ -10,7 +10,7 @@
         }
 
         public function index(){
-            $data["Countries"] = json_encode($this->Ong_mere_model->getCountries());
+            $data["Countries"] = $this->Ong_mere_model->getSuggestions("Mada");
             $this->load->view("Menu");
             $this->load->view("Nouvelle_ONG", $data);
         }
