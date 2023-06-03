@@ -1,0 +1,10 @@
+.Form_list{
+    float: left;
+    width: 30%;
+    border: 1px solid black;
+}
+.content{
+    width: 65%;
+    border: 1px solid black;
+    float: right;
+}
