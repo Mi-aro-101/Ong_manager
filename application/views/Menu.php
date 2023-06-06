@@ -11,7 +11,7 @@
     <div class="Form_list">
         <center><h1>Liste des formulaires</h1></center>
         <ul>
-            <li><button><a href="<?php echo base_url("index.php/Ong_mere");?>">Nouvelle ONG</a></button></li>
+            <li><button><a href="<?php echo site_url("/Ong_mere");?>">Nouvelle ONG</a></button></li>
         </ul>
     </div>
 </body>
