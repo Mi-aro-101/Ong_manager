@@ -43,7 +43,7 @@
             const target=e.target.value;
             $.ajax({
                 type: "POST",
-                url: "<?php echo site_url("Ong_mere/index") ?>",
+                url: "<?php echo site_url("Ong_mere/Objectif") ?>",
                 data: { [namepost]: target },
                 success:function(response){
                     const post=document.querySelector(".resultContainer");
