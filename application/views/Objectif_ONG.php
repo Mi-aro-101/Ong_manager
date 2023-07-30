@@ -19,7 +19,7 @@
         <p>
       </form>
 </body>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src=<?php echo base_url("Js/jquery.js");?>></script>
 <script>
     suggest('region');
 
@@ -43,7 +43,7 @@
             const target=e.target.value;
             $.ajax({
                 type: "POST",
-                url: "<?php echo site_url("Ong_mere/index") ?>",
+                url: "<?php echo site_url("Ong_mere/objectif") ?>",
                 data: { [namepost]: target },
                 success:function(response){
                     const post=document.querySelector(".resultContainer");
