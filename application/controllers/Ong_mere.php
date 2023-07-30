@@ -45,7 +45,7 @@
             $data['idONGMere'] = $idlastONG;
             foreach($pays as $intervenants){
                 $data['nom'] = $intervenants;
-                $this->Ong_mere_model->insert('PaysInerventions', $data);
+                $this->Ong_mere_model->insert('PaysInterventions', $data);
             }
         }
 
@@ -71,7 +71,15 @@
             $idlastONG = $this->Ong_mere_model->getLastONG()['idONGMere'];
             $this->insertPaysinterventions($idlastONG, $paysIntervenants);
 
-            $this->db->trans_complete();
+            redirect(site_url('Ong_mere/presidentForm'));
+        }
+
+        public function presidentForm(){
+            $data['fonctionString'] = ['President et representant', 'President'];
+            $data['fonction'] = [21, 11];
+            $data['situationMatrimoniale'] = $this->Ong_mere_model->select('SituationMatrimoniale');
+            $this->load->view("Menu");
+            $this->load->view('Individu', $data);
         }
     }
 ?>

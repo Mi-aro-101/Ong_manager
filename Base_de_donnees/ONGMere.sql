@@ -17,6 +17,11 @@ create table PaysInterventions(
     nom VARCHAR(50) not null
 );
 
+create table SituationMatrimoniale(
+    idSituationMatrimoniale INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    designation VARCHAR(30) NOT NULL
+);
+
 create table Individu(
     idIndividu INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
     idONGMere INT NOT NULL REFERENCES ONGMere(idONGMere),
@@ -25,7 +30,7 @@ create table Individu(
     dateDeNaissance DATE not null,
     lieuNaissance VARCHAR(50) not null,
     nationalite VARCHAR(50) not null,
-    situationMatrimoniale VARCHAR(50) not null,
+    idSituationMatrimoniale INTEGER not null REFERENCES SituationMatrimoniale (idSituationMatrimoniale),
     adressePersonelle VARCHAR(50) not null,
     emploi VARCHAR(50) default null,
     societeEmployeur VARCHAR(50) default null,
@@ -33,7 +38,12 @@ create table Individu(
     experienceHumanitaire VARCHAR(200) default null,
     telephone VARCHAR(11) not null,
     mail VARCHAR(50) not null,
-    fonction CHAR(1) not null
+);
+
+create table IndividuRole(
+    idIndividuRole INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    idIndividu INT NOT NULL REFERENCES Individu(idIndividu),
+    fonction INT NOT NULL
 );
 
 create table Projet(
