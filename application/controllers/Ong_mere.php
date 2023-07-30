@@ -40,5 +40,38 @@
             if($valiny==""){return "sdjfhskdjfh";}
             return $valiny;
         }
+
+        public function insertPaysinterventions($idlastONG, $pays){
+            $data['idONGMere'] = $idlastONG;
+            foreach($pays as $intervenants){
+                $data['nom'] = $intervenants;
+                $this->Ong_mere_model->insert('PaysInerventions', $data);
+            }
+        }
+
+        public function inserereOngMere(){
+
+            $data['denomination'] = $this->input->post('denomination');
+            $data['dateDeCreation'] = $this->input->post('dateDeCreation');
+            $data['nationalite'] = $this->input->post('nationalite');
+            $data['numeroEnregistrement'] = $this->input->post('numeroEnregistrement');
+            $data['objectifStatuaire'] = $this->input->post('objectifStatuaire');
+            $data['domaineActivite'] = $this->input->post('domaineActivite');
+            $data['effectifMembres'] = $this->input->post('effectifMembres');
+            $data['modeDonationFinanciere'] = $this->input->post('modeDonationFinanciere');
+            $data['organigramme'] = $this->input->post('organigramme');
+
+            $paysIntervenants = $this->input->post('Autres_pays_d_intervention');
+
+            $this->load->database("mysql");
+
+            $this->db->trans_start();
+
+            $this->Ong_mere_model->insert('ONGMere', $data);
+            $idlastONG = $this->Ong_mere_model->getLastONG()['idONGMere'];
+            $this->insertPaysinterventions($idlastONG, $paysIntervenants);
+
+            $this->db->trans_complete();
+        }
     }
 ?>
