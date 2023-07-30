@@ -8,6 +8,12 @@
             parent::__construct();
         }
 
+        public function select($table){
+            $this->load->database("mysql");
+            $result = $this->db->get($table)->result();
+            return $result;
+        }
+
         public function getCountries(){
             $this->load->database("mysql");
             $query = "SELECT nameCountry FROM Countries";
