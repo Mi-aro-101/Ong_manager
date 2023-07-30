@@ -50,8 +50,8 @@ $active_record = TRUE;
 
 $db['mysql']['hostname'] = 'localhost';
 $db['mysql']['username'] = 'root';
-$db['mysql']['password'] = '';
-$db['mysql']['database'] = 'ONG_manager';
+$db['mysql']['password'] = 'root';
+$db['mysql']['database'] = 'Ong_manager';
 $db['mysql']['dbdriver'] = 'mysqli';
 $db['mysql']['dbprefix'] = '';
 $db['mysql']['pconnect'] = TRUE;

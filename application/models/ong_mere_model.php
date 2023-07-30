@@ -22,6 +22,7 @@
         }
 
         public function getTableValue($tableName, $names, $name=""){
+            $this->load->database("mysql");
             $query="select * from $tableName where $names like '%$name%'";
             $valiny=array();
             $query=$this->db->query($query);

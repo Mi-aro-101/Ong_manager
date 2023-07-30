@@ -30,7 +30,7 @@
         <p id="huhu"></p>
     </form>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src=<?php echo base_url("Js/jquery.js");?>></script>
 <script src=<?php echo base_url("Js/cloneLine.js");?>></script>
 <script>
 jQuery(document).ready(function() {
