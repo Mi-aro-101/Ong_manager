@@ -3,9 +3,9 @@
 
     class Ong_mere_model extends CI_Model
     {
-        public function selec(){
-            $valiny = "select * from ong";
-            return select;
+
+        public function __construct(){
+            parent::__construct();
         }
 
         public function getCountries(){
@@ -56,7 +56,7 @@
 
         public function getSuggestions($query){
             $this->load->database("mysql");
-            $fullquery = "SELECT nameCountry FROM Countries WHERE nameCountry LIKE '%s'";
+            $fullquery = "SELECT nameCountry FROM Countries WHERE nameCountry LIKE '%s' LIMIT 5";
             $queryExec = sprintf($fullquery, '%'.$query."%");
             $queryExec = $this->db->query($queryExec);
             $suggest = array();
@@ -66,6 +66,24 @@
             }
 
             return $suggest;
+        }
+
+        public function insert($table, $data){
+            $result = $this->db->insert($table, $data);
+            return $result;
+        }
+
+        public function getLastONG(){
+            $this->load->database("mysql");
+            $fullquery = "SELECT * FROM ONGMere WHERE idONGMere = (SELECT MAX(idONGMere) FROM ONGMere)";
+            $queryExec = $this->db->query($fullquery);
+            $suggest = array();
+
+            foreach($queryExec->result_array() as $row){
+                $suggest[] = $row;
+            }
+
+            return $suggest[0];
         }
     }
 ?>

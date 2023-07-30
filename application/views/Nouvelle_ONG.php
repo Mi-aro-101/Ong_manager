@@ -1,32 +1,33 @@
 <link rel="stylesheet" href=<?php echo base_url("css/Nouvelle_ONG.css");?> >
+<title>Inscription ONG</title>
 <div class="content">
     <center><h1>Fiche de renseignement sur l'ONG mere</h1></center>
-    <form action="" method="post">
-        <p>Denomination : <input type="text" name="Denomination"></p>
-        <p>Date de creation : <input type="date" name="Date_de_creation"></p>
+    <form action=<?php echo site_url("Ong_mere/inserereOngMere");?> method="post">
+        <p>Denomination : <input type="text" name="denomination"></p>
+        <p>Date de creation : <input type="date" name="dateDeCreation"></p>
 
         <p>
-            Nationalite : <input type="text" name="Nationalite" class="country" autocomplete="off" data-suggestions=".country-suggestions">
+            Nationalite : <input type="text" name="nationalite" class="country" autocomplete="off" data-suggestions=".country-suggestions">
             <ul class="suggestions country-suggestions"></ul>
         </p>
         
-        <p>Numero d'enregistrement : <input type="text" name="Numero_d_enregistrement" list="a"></p>
-        <p>Objectifs statuaires : <input type="text" name="Objectifs_statuaires"></p>
-        <p>Domaine d'activites : <input type="text" name="Domaine_d_activites"></p>
+        <p>Numero d'enregistrement : <input type="text" name="numeroEnregistrement" list="a"></p>
+        <p>Objectifs statuaires : <textarea name="objectifStatuaire" id="" cols="30" rows="1"></textarea></p>
+        <p>Domaine d'activites : <input type="text" name="domaineActivite"></p>
 
         <fieldset class="partenaire">
             <legend><h2>Autres pays intervenants</h2></legend>
             <button type="button" onclick="cloneRow()">+</button>
             <p class="intervenants">
-                Autres pays d'intervention : <input type="text" name="Autres_pays_d_intervention" class="intervenant" data-suggestions=".intervenant-suggestions">
+                Autres pays d'intervention : <input type="text" name="Autres_pays_d_intervention[]" class="intervenant" data-suggestions=".intervenant-suggestions">
                 <ul class="suggestions intervenant-suggestions"></ul>
             </p>
     </fieldset>
 
-        <p>Effectifs des membres : <input type="text" name="Effectif_des_membres"></p>
-        <p>Mode de donations financieres : <input type="text" name="Mode_de_donations_financieres"></p>
-        <p>Organigramme de l'organisation : <input type="text" name="Organigramme_de_l_organisation"></p>
-        <center><button type="submit">Valider</button></center><br>
+        <p>Effectifs des membres : <input type="text" name="effectifMembres"></p>
+        <p>Mode de donations financieres : <input type="text" name="modeDonationFinanciere"></p>
+        <p>Organigramme de l'organisation : <input type="text" name="organigramme"></p>
+        <center><button type="submit">Suivant</button></center><br>
         <p id="huhu"></p>
     </form>
 </div>
@@ -38,6 +39,7 @@ jQuery(document).ready(function() {
     var input = $(this);
     var query = input.val(); // Get the value of the input field
     var suggestionList = $(input.data('suggestions'));
+    var inputParent = input.parent(); // Get the parent element of the input field
 
     // Make an AJAX request to the server to retrieve the suggestions
     $.ajax({
@@ -47,6 +49,8 @@ jQuery(document).ready(function() {
       dataType: "json",
       success: function(response) {
         var suggestions = response.suggestions;
+
+        // Empty the suggestion list for the specific input's parent element
         suggestionList.empty();
 
         suggestions.forEach(function(suggestion) {
@@ -57,6 +61,9 @@ jQuery(document).ready(function() {
           });
           suggestionList.append(listItem);
         });
+
+        // Append the suggestion list to the specific input's parent element
+        inputParent.append(suggestionList);
       },
       error: function(xhr, status, error) {
         console.log("Error:", error);
@@ -64,6 +71,7 @@ jQuery(document).ready(function() {
     });
   });
 });
+
 
 
 </script>
