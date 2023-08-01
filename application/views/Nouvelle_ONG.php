@@ -1,6 +1,7 @@
 <link rel="stylesheet" href=<?php echo base_url("css/Nouvelle_ONG.css");?> >
 <div class="content">
     <center><h1>Fiche de renseignement sur l'ONG mere</h1></center>
+    <a href="<?= site_url("Ong_mere/objectif") ?>">Objectif</a>
     <form action="" method="post">
         <p>Denomination : <input type="text" name="Denomination"></p>
         <p>Date de creation : <input type="date" name="Date_de_creation"></p>
@@ -9,7 +10,7 @@
             Nationalite : <input type="text" name="Nationalite" class="country" autocomplete="off" data-suggestions=".country-suggestions">
             <ul class="suggestions country-suggestions"></ul>
         </p>
-        
+
         <p>Numero d'enregistrement : <input type="text" name="Numero_d_enregistrement" list="a"></p>
         <p>Objectifs statuaires : <input type="text" name="Objectifs_statuaires"></p>
         <p>Domaine d'activites : <input type="text" name="Domaine_d_activites"></p>

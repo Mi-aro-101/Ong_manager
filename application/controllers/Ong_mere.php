@@ -14,7 +14,7 @@
             $this->load->view("Menu");
             $this->load->view("Nouvelle_ONG", $data);
         }
-        
+
         public function objectif(){
             $region = $this->Ong_mere_model->getTableValue("Region","des_region",$this->suggest('region'));
             $District = $this->Ong_mere_model->getTableValue("District","des_fiv",$this->suggest('district'));
@@ -33,8 +33,8 @@
             $this->output->set_content_type('application/json');
             $this->output->set_output(json_encode(['suggestions' => $suggestions]));
         }
-        
-        
+
+
         public function suggest($postName){
             $valiny=$this->input->post($postName);
             if($valiny==""){return "sdjfhskdjfh";}
