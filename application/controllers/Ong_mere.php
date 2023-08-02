@@ -18,7 +18,8 @@
         public function objectif(){
             $region = $this->Ong_mere_model->getTableValue("Region","des_region",$this->suggest('region'));
             $District = $this->Ong_mere_model->getTableValue("District","des_fiv",$this->suggest('district'));
-            $values["values"]=array("region"=>$region, "district"=>$District);
+            $fokotany = $this->Ong_mere_model->getTableValue("Fokotany","Fokotany_anarany",$this->suggest('fokotany'));
+            $values["values"]=array("region"=>$region, "district"=>$District, "fokotany"=>$fokotany);
             $this->load->view("Objectif_ONG", $values);
         }
 

@@ -4,32 +4,54 @@
     <title>OBJECTIF</title>
 </head>
 <body>
-    <form action="" method="get">
-        <p class='region'>region: <input type='text' name='region' value=""></input></p>
-            <div class="resultContainer suggestregion">
-                <?php for ($i=0; $i < count($values["region"]); $i++) { ?>
-                    <a href="#">
-                        <?php echo $values["region"][$i]["des_region"]; ?>
-                    </a>
-                <?php } ?>
-            </div>
-        </p>
-        <p class='district'>district: <input type='text' id='district' name='district' value=""></input></p>
-            <div class="resultContainer suggestdistrict">
-                <?php for ($i=0; $i < count($values["district"]); $i++) { ?>
-                    <a href="#">
-                        <?php echo $values["district"][$i]["des_fiv"]; ?>
-                    </a>
-                <?php } ?>
-            </div>
-        </p>
-    </form>
+    <div class="boss">
+        <form action="" method="get">
+            <p>Titre du projet: <input type="text" name="titre"></p>
+            <p>Objectif principal: <input type="text" name="principal"></p>
+            <p>Objectifs specifiques:</p><textarea name="specific" cols="30" rows="10"></textarea>
+            <p>Activite1: <input type="text" name="activite"></p>
+            <p>Resultats attendues:</p><textarea name="resultats" cols="30" rows="10"></textarea>
+            <p class='region'>region: <input type='text' name='region' value=""></input></p>
+                <div class="resultContainer suggestregion">
+                    <?php for ($i=0; $i < count($values["region"]); $i++) { ?>
+                        <a href="#">
+                            <?php echo $values["region"][$i]["des_region"]; ?>
+                        </a>
+                    <?php } ?>
+                </div>
+            </p>
+            <p class='district'>district: <input type='text' id='district' name='district' value=""></input></p>
+                <div class="resultContainer suggestdistrict">
+                    <?php for ($i=0; $i < count($values["district"]); $i++) { ?>
+                        <a href="#">
+                            <?php echo $values["district"][$i]["des_fiv"]; ?>
+                        </a>
+                    <?php } ?>
+                </div>
+            </p>
+            <p class='fokotany'>fokotany: <input type='text' name='fokotany' value=""></input></p>
+                <div class="resultContainer suggestfokotany">
+                    <?php for ($i=0; $i < count($values["fokotany"]); $i++) { ?>
+                        <a href="#">
+                            <?php echo $values["fokotany"][$i]["Fokotany_anarany"]; ?>
+                        </a>
+                    <?php } ?>
+                </div>
+            </p>
+            <p>Population beneficiaire: <input type="text" name="population"></p>
+            <p>Cout estimatif: <input type="number" name="cout" min=0></p>
+            <p>Source de financement: <input type="text" name="source"></p>
+            <p>Liste des moyens humains:</p><textarea name="lshumain" cols="30" rows="10"></textarea>
+            <p>Moyens materiels: </p><textarea name="materiels" cols="30" rows="10"></textarea>
+        </form>
+    </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="<?= base_url('Js/function.js') ?>"></script>
 <script>
     suggest('region');
     suggest('district');
+    suggest('fokotany');
     function suggest(namepost){
         let oldHtml=document.documentElement.innerHTML;
         const name=".suggest"+namepost;
@@ -53,9 +75,23 @@
     }
 </script>
 <style>
-    .resultContainer p{
+    .resultContainer p, .resultContainer textarea{
         display: none;
     }
-    a{text-decoration:none;color:blue;display:block;}
+    .resultContainer a{
+        text-decoration:none;color:blue;display:block;
+        border-right: solid black 1px;
+        width: 200px;
+        font-size: 13px;
+    }
+    .resultContainer a:hover{
+        transition: 0.5s;
+        background-color: whitesmoke;
+    }
+    .boss{
+        max-height: 500px;
+        overflow: auto;
+        margin-left: 2vw;
+    }
 </style>
 </html>
