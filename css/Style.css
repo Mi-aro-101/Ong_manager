@@ -5,6 +5,7 @@
 }
 .content{
     width: 65%;
-    border: 1px solid black;
+    border: 1px solid #000000;
     float: right;
+    position: -ms-page;
 }

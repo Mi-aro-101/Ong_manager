@@ -79,7 +79,7 @@
         display: none;
     }
     .resultContainer a{
-        text-decoration:none;color:blue;display:block;
+        text-decoration:none;color:black;display:block;
         border-right: solid black 1px;
         width: 200px;
         font-size: 13px;
@@ -88,9 +88,8 @@
         transition: 0.5s;
         background-color: whitesmoke;
     }
+    .resultContainer{max-height: 200px;overflow: auto;}
     .boss{
-        max-height: 500px;
-        overflow: auto;
         margin-left: 2vw;
     }
 </style>
