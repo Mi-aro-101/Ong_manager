@@ -36,13 +36,14 @@ create table Individu(
     societeEmployeur VARCHAR(50) default null,
     adresseEmployeur VARCHAR(50) default null,
     experienceHumanitaire VARCHAR(200) default null,
-    telephone VARCHAR(11) not null,
+    telephone VARCHAR(30) not null,
     mail VARCHAR(50) not null,
 );
 
 create table IndividuRole(
     idIndividuRole INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
     idIndividu INT NOT NULL REFERENCES Individu(idIndividu),
+    idONGMere INT NOT NULL REFERENCES ONGMere(idONGMere),
     fonction INT NOT NULL
 );
 

@@ -5,23 +5,18 @@
     {
         public function __construct(){
             parent::__construct();
+            $this->load->database("mysql");
             $this->load->helper("url");
             $this->load->model("Ong_mere_model");
         }
 
         public function index(){
-            $data["Countries"] = $this->Ong_mere_model->getSuggestions("Mada");
-            $this->load->view("Menu");
-            $this->load->view("Nouvelle_ONG", $data);
-        }
-        
-        public function objectif(){
             $region = $this->Ong_mere_model->getTableValue("Region","des_region",$this->suggest('region'));
             $District = $this->Ong_mere_model->getTableValue("District","des_fiv",$this->suggest('district'));
-            $values["values"]=array("region"=>$region, "district"=>$District);
-            $this->load->view("Objectif_ONG", $values);
+            $fokotany = $this->Ong_mere_model->getTableValue("Fokotany","Fokotany_anarany",$this->suggest('fokotany'));
+            $values["values"]=array("region"=>$region, "district"=>$District, "fokotany"=>$fokotany);
+            $this->load->view("Nouvelle_ONG", $values);
         }
-
         public function suggestCountry(){
             $countrySuggestion =  $_POST["query"];
 
@@ -37,7 +32,7 @@
         
         public function suggest($postName){
             $valiny=$this->input->post($postName);
-            if($valiny==""){return "sdjfhskdjfh";}
+            if($valiny==""){return "pppp";}
             return $valiny;
         }
 
@@ -63,23 +58,60 @@
 
             $paysIntervenants = $this->input->post('Autres_pays_d_intervention');
 
-            $this->load->database("mysql");
+            // $this->load->database("mysql");
 
-            $this->db->trans_start();
-
+            $this->db->trans_begin();
+            
             $this->Ong_mere_model->insert('ONGMere', $data);
-            $idlastONG = $this->Ong_mere_model->getLastONG()['idONGMere'];
+            $idlastONG = $this->Ong_mere_model->getLast('ONGMere')['idONGMere'];
             $this->insertPaysinterventions($idlastONG, $paysIntervenants);
 
-            redirect(site_url('Ong_mere/presidentForm'));
+            redirect(site_url('Ong_mere/presidentForm/'.$idlastONG));
         }
 
-        public function presidentForm(){
+        public function presidentForm($idOngMere){
+            $idlastONG = $this->Ong_mere_model->getLast('ONGMere')['idONGMere'];
+            $data['lastong'] = $idlastONG;
             $data['fonctionString'] = ['President et representant', 'President'];
             $data['fonction'] = [21, 11];
             $data['situationMatrimoniale'] = $this->Ong_mere_model->select('SituationMatrimoniale');
+            $data['idONGMere'] = $idOngMere;
             $this->load->view("Menu");
             $this->load->view('Individu', $data);
+        }
+
+        public function insereIndividu(){
+            $data['idONGMere'] = $this->input->post('idONGMere');
+            $data['nom'] = $this->input->post('nom');
+            $data['prenom'] = $this->input->post('prenom');
+            $data['dateDeNaissance'] = $this->input->post('dateDeNaissance');
+            $data['lieuNaissance'] = $this->input->post('lieuNaissance');
+            $data['nationalite'] = $this->input->post('nationalite');
+            $data['idSituationMatrimoniale'] = $this->input->post('idSituationMatrimoniale');
+            $data['adressePersonelle '] = $this->input->post('adressePersonelle');
+            $data['emploi'] = $this->input->post('emploi');
+            $data['societeEmployeur'] = $this->input->post('societeEmployeur');
+            $data['adresseEmployeur '] = $this->input->post('adresseEmployeur');
+            $data['experienceHumanitaire'] = $this->input->post('experienceHumanitaire');
+            $data['telephone'] = $this->input->post('telephone');
+            $data['mail'] = $this->input->post('mail');
+
+            // $idlastONG = $this->Ong_mere_model->getLast('ONGMere')['idONGMere'];
+            // echo $idlastONG;
+            echo $data['idONGMere'];
+
+            
+            $this->Ong_mere_model->insert('Individu', $data);
+
+            // $individuRole['idIndividu'] = $this->Ong_mere_model->getLast('Individu')['idIndividu'];
+            // echo $individuRole['idIndividu'];
+            // $individuRole['fonction'] = $this->input->post('role');
+            // $individuRole['idONGMere'] = $this->input->post('idONGMere');
+
+            // $this->Ong_mere_model->insert('IndividuRole', $individuRole);
+            
+            $this->db->trans_commit();
+
         }
     }
 ?>
