@@ -14,11 +14,16 @@
             $region = $this->Ong_mere_model->getTableValue("Region","des_region",$this->suggest('region'));
             $District = $this->Ong_mere_model->getTableValue("District","des_fiv",$this->suggest('district'));
             $fokotany = $this->Ong_mere_model->getTableValue("Fokotany","Fokotany_anarany",$this->suggest('fokotany'));
-            $values["values"]=array("region"=>$region, "district"=>$District, "fokotany"=>$fokotany);
+            $situationMatrimoniale = $this->Ong_mere_model->select('SituationMatrimoniale');
+            $values["values"]=array("region"=>$region, "district"=>$District, "fokotany"=>$fokotany, 'situationMatrimoniale'=>$situationMatrimoniale);
             $this->load->view("Nouvelle_ONG", $values);
         }
         public function suggestCountry(){
             $countrySuggestion =  $_POST["query"];
+
+            if(empty($countrySuggestion)){
+                $countrySuggestion = "ppp";
+            }
 
             // Perform a database query to fetch the suggestions based on the query
             // Replace this with your own database query logic
