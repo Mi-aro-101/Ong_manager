@@ -62,7 +62,7 @@
 
         public function getSuggestions($query){
             $this->load->database("mysql");
-            $fullquery = "SELECT nameCountry FROM Countries WHERE nameCountry LIKE '%s' LIMIT 5";
+            $fullquery = "SELECT nameCountry FROM Countries WHERE nameCountry LIKE '%s'";
             $queryExec = sprintf($fullquery, '%'.$query."%");
             $queryExec = $this->db->query($queryExec);
             $suggest = array();
@@ -79,9 +79,10 @@
             return $result;
         }
 
-        public function getLastONG(){
+        public function getLast($table){
             $this->load->database("mysql");
-            $fullquery = "SELECT * FROM ONGMere WHERE idONGMere = (SELECT MAX(idONGMere) FROM ONGMere)";
+            $fullquery = "SELECT * FROM %s WHERE %s = (SELECT MAX(%s) FROM %s)";
+            $fullquery = sprintf($fullquery, $table, 'id'.$table, 'id'.$table, $table);
             $queryExec = $this->db->query($fullquery);
             $suggest = array();
 

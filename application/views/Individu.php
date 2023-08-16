@@ -1,9 +1,11 @@
 <title>Individu</title>
+<h1><?php echo $lastong;?></h1>
 <link rel="stylesheet" href=<?php echo base_url("css/Nouvelle_ONG.css");?> >
 <div class="content">
     <center><h1>President ou representant de l'ONG</h1></center>
-    <form action=<?php echo site_url("Ong_mere/inserereOngMere");?> method="post">
+    <form action=<?php echo site_url("Ong_mere/insereIndividu");?> method="post">
     <p>Etes-vous ?</p>
+            <input type="hidden" name="idONGMere" id="" value='<?php echo $idONGMere; ?>'>
             <?php for($i =0 ; $i < count($fonction); $i++) { ?>
                 <p><input type="radio" name="role" value="<?php echo $fonction[$i];?>"><?php echo $fonctionString[$i];?></p>
             <?php } ?>
@@ -17,7 +19,7 @@
             </p>
             <fieldset><legend>Situation matrimoniale</legend>
                 <?php foreach($situationMatrimoniale as $sm) { ?>
-                    <p><input type="radio" name="situationMatrimoniale" value="<?php echo $sm->idSituationMatrimoniale;?>"><?php echo $sm->designation;?></p>
+                    <p><input type="radio" name="idSituationMatrimoniale" value="<?php echo $sm->idSituationMatrimoniale;?>"><?php echo $sm->designation;?></p>
                 <?php } ?>
             </fieldset>
             <p>Adresse personelle : <input type="text" name="adressePersonelle" id=""></p>
