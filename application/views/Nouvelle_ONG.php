@@ -7,17 +7,18 @@
     <fieldset>
       <legend><h2>Fiche de renseignement sur l'ONG mere</h2></legend>
           Denomination : <input type="text" name="denomination" >
-          <p>Doit-etre moins de 40 caracteres</p>
+          <p>Doit-etre de 2 a 40 caracteres et seulement de type alphanumerique</p>
 
-          <p>Date de creation : <input type="date" name="dateDeCreation"></p>
+          Date de creation : <input type="date" name="dateDeCreation">
+          <p>Ne doit pas depasser la date aujourd'hui</p>
 
           <p>
-              Nationalite : <input type="text" name="nationalite" class="country" autocomplete="off" data-suggestions=".country-suggestions">
+              Nationalite : <input type="text" name="nationalite" class="country" data-suggestions=".country-suggestions">
               <ul class="resultContainer country-suggestions"></ul>
           </p>
           
           <p>Numero d'enregistrement : <input type="text" name="numeroEnregistrement" list="a"></p>
-          <p>Objectifs statuaires : <textarea name="objectifStatuaire" id="" cols="30" rows="1"></textarea></p>
+          Objectifs statuaires : <textarea name="objectifStatuaire" id="" cols="30" rows="1"></textarea>
           <p>Domaine d'activites : <input type="text" name="domaineActivite"></p>
 
           <fieldset class="partenaire">
@@ -29,7 +30,7 @@
               </p>
       </fieldset>
 
-          <p>Effectifs des membres : <input type="text" name="effectifMembres"></p>
+          Effectifs des membres : <input type="number" name="effectifMembres">
           <p>Mode de donations financieres : <input type="text" name="modeDonationFinanciere"></p>
           <p>Organigramme de l'organisation : <input type="text" name="organigramme"></p>
           <center><button type="submit">Suivant</button></center><br>
@@ -42,7 +43,8 @@
       <legend><h2>President</h2></legend>
               <p>Nom : <input type="text" name="nom" id=""></p>
               <p>Prenom : <input type="text" name="prenom" id=""></p>
-              <p>Date de naissance : <input type="date" name="dateNaissance" id=""></p>
+              Date de naissance : <input type="date" name="dateNaissance" id="">
+              <p>Date non valide</p>
               <p>Lieu de naissance : <input type="text" name="lieuNaissance" id=""></p>
               <p>
                   Nationalite : <input type="text" name="nationalite" class="country" autocomplete="off" data-suggestions=".country-suggestions">
@@ -57,9 +59,10 @@
               <p>Emploi : <input type="text" name="emploi" id=""></p>
               <p>Societe employeur : <input type="text" name="societeEmployeur" id=""></p>
               <p>Experience dans le domaine humanitaire : <textarea name="experienceHumanitaire" id="" cols="30" rows="1"></textarea></p>
-              <p>Telephone : <input type="number" name="telephone" id=""></p>
-              <p>Mail : <input type="mail" name="mail" id=""></p>
-              <center><button type="submit">Suivant</button></center><br>
+              Telephone : <input type="text" name="telephone_president" id="">
+              <p>Numero de telephone invalide</p>
+              Mail : <input type="mail" name="mail_president" id="">
+              <p>Adresse email invalide</p>
     </fieldset>
 
     <!-- Representant -->
@@ -68,7 +71,8 @@
       <legend><h2>Representant</h2></legend>
               <p>Nom : <input type="text" name="nom" id=""></p>
               <p>Prenom : <input type="text" name="prenom" id=""></p>
-              <p>Date de naissance : <input type="date" name="dateNaissance" id=""></p>
+              Date de naissance : <input type="date" name="dateNaissance" id="">
+              <p>Date non valide</p>
               <p>Lieu de naissance : <input type="text" name="lieuNaissance" id=""></p>
               <p>
                   Nationalite : <input type="text" name="nationalite" class="country" autocomplete="off" data-suggestions=".country-suggestions">
@@ -83,9 +87,10 @@
               <p>Emploi : <input type="text" name="emploi" id=""></p>
               <p>Societe employeur : <input type="text" name="societeEmployeur" id=""></p>
               <p>Experience dans le domaine humanitaire : <textarea name="experienceHumanitaire" id="" cols="30" rows="1"></textarea></p>
-              <p>Telephone : <input type="number" name="telephone" id=""></p>
-              <p>Mail : <input type="mail" name="mail" id=""></p>
-              <center><button type="submit">Suivant</button></center><br>
+              Telephone : <input type="text" name="telephone_representant" id="">
+              <p>Numero de telephone invalide</p>
+              Mail : <input type="mail" name="mail_representant" id="">
+              <p>Adresse email invalide</p>
     </fieldset>
 
     <!-- Objectifs -->

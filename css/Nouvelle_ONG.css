@@ -28,19 +28,27 @@ fieldset{
   width: 60%;
 }
 
+input{
+  display: block;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 1px solid black;
+  outline: none !important;
+}
+
+/* regex js css */
+
 input.valid{
-  border-color: #36cc36;
+  border : 3px solid #36cc36;
 }
 input.invalid{
-  border-color: orange;
+  border : 3px solid red;
 }
 input + p{
   font-family: arial;
   font-size: 0.9em;
   font-weight: bold;
-  text-align: center;
-  margin: 0 10px;
-  color: orange;
+  color: red;
   opacity: 0;
   height: 0;
 }
