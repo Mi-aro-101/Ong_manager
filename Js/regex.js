@@ -1,10 +1,10 @@
 const inputs = document.querySelectorAll("input");
 
 const patterns = {
-    telephone_president: /^[0-9+\- ]{5,20}$/i,
-    telephone_representant: /^[0-9+\- ]{5,20}$/i,
-    mail_president: /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,4})?$/,
-    mail_representant: /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,4})?$/
+    telephone_president: /^(?=.{5,20}$)[0-9+\- ]+$/,
+    telephone_representant: /^(?=.{5,20}$)[0-9+\- ]+$/,
+    mail_president: /^[\w\.-]+@[\w\.-]+\.\w+$/,
+    mail_representant: /^[\w\.-]+@[\w\.-]+\.\w+$/
 }
 
 // Validation function
@@ -13,7 +13,7 @@ function checking(field, regex){
         is_valid_date(field);
     }
     else{
-        if(regex.test(field.value) && field.value == ''){
+        if(regex.test(field.value) && field.value != ''){
             field.className='valid';
         }
         else{
@@ -24,7 +24,7 @@ function checking(field, regex){
 
 inputs.forEach((input) =>{
     input.addEventListener("input", (e) =>{
-        checking(e.target, patterns[e.target.attributes.name.value]);
+        checking(e.target, patterns[e.target.getAttribute("name")]);
     });
 });
 
@@ -41,8 +41,6 @@ function is_date(date){
 function is_valid_date(date){
     let daty = new Date(date.value);
     let current_date = new Date();
-    console.log(daty);
-    console.log(current_date);
     if(daty >= current_date){
         date.className = "invalid";
     }
