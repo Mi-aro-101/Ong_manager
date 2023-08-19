@@ -229,20 +229,3 @@ jQuery(document).ready(function() {
     }
 
 </script>
-<style>
-    .resultContainer li{
-        text-decoration:none;color:black;display:block;
-        border-right: solid black 1px;
-        width: 30%;
-        font-size: 85%;
-    }
-    .resultContainer li:hover{
-        cursor: pointer;
-        transition: 0.5s;
-        background-color: whitesmoke;
-    }
-    .resultContainer{max-height: 200px;overflow: auto;}
-    .boss{
-        margin-left: 2vw;
-    }
-</style>
