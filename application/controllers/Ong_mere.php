@@ -10,12 +10,12 @@
             $this->load->model("Ong_mere_model");
         }
 
-        public function index(){
+        public function index($error="No error"){
             $region = $this->Ong_mere_model->getTableValue("Region","des_region",$this->suggest('region'));
             $District = $this->Ong_mere_model->getTableValue("District","des_fiv",$this->suggest('district'));
             $fokotany = $this->Ong_mere_model->getTableValue("Fokotany","Fokotany_anarany",$this->suggest('fokotany'));
             $situationMatrimoniale = $this->Ong_mere_model->select('SituationMatrimoniale');
-            $values["values"]=array("region"=>$region, "district"=>$District, "fokotany"=>$fokotany, 'situationMatrimoniale'=>$situationMatrimoniale);
+            $values["values"]=array("error"=>$error,"region"=>$region, "district"=>$District, "fokotany"=>$fokotany, 'situationMatrimoniale'=>$situationMatrimoniale);
             $this->load->view("Nouvelle_ONG", $values);
         }
         public function suggestCountry(){
@@ -33,8 +33,8 @@
             $this->output->set_content_type('application/json');
             $this->output->set_output(json_encode(['suggestions' => $suggestions]));
         }
-        
-        
+
+
         public function suggest($postName){
             $valiny=$this->input->post($postName);
             if($valiny==""){return "pppp";}
@@ -50,28 +50,26 @@
         }
 
         public function inserereOngMere(){
-
-            $data['denomination'] = $this->input->post('denomination');
-            $data['dateDeCreation'] = $this->input->post('dateDeCreation');
-            $data['nationalite'] = $this->input->post('nationalite');
-            $data['numeroEnregistrement'] = $this->input->post('numeroEnregistrement');
-            $data['objectifStatuaire'] = $this->input->post('objectifStatuaire');
-            $data['domaineActivite'] = $this->input->post('domaineActivite');
-            $data['effectifMembres'] = $this->input->post('effectifMembres');
-            $data['modeDonationFinanciere'] = $this->input->post('modeDonationFinanciere');
-            $data['organigramme'] = $this->input->post('organigramme');
+            $this->load->helper("function");
+            $name=array('denomination','dateDeCreation','nationalite','numeroEnregistrement'
+            ,'objectifStatuaire','domaineActivite','effectifMembres','modeDonationFinanciere'
+            ,'organigramme');
+            $data=namepost($name);
 
             $paysIntervenants = $this->input->post('Autres_pays_d_intervention');
+            $error=fusion(emptyTable($data, $name), getErrorDate($name));
+            var_dump($error);
+            $error=implode("¨",$error);
+            if($error===""){
+                $this->db->trans_begin();
 
-            // $this->load->database("mysql");
+                $this->Ong_mere_model->insert('ONGMere', $data);
+                $idlastONG = $this->Ong_mere_model->getLast('ONGMere')['idONGMere'];
+                $this->insertPaysinterventions($idlastONG, $paysIntervenants);
 
-            $this->db->trans_begin();
-            
-            $this->Ong_mere_model->insert('ONGMere', $data);
-            $idlastONG = $this->Ong_mere_model->getLast('ONGMere')['idONGMere'];
-            $this->insertPaysinterventions($idlastONG, $paysIntervenants);
-
-            redirect(site_url('Ong_mere/presidentForm/'.$idlastONG));
+                redirect(site_url('Ong_mere/presidentForm/'.$idlastONG));
+            }
+            else{redirect(site_url('Ong_mere/index/'.$error));}
         }
 
         public function presidentForm($idOngMere){
@@ -105,7 +103,7 @@
             // echo $idlastONG;
             echo $data['idONGMere'];
 
-            
+
             $this->Ong_mere_model->insert('Individu', $data);
 
             // $individuRole['idIndividu'] = $this->Ong_mere_model->getLast('Individu')['idIndividu'];
@@ -114,7 +112,7 @@
             // $individuRole['idONGMere'] = $this->input->post('idONGMere');
 
             // $this->Ong_mere_model->insert('IndividuRole', $individuRole);
-            
+
             $this->db->trans_commit();
 
         }
