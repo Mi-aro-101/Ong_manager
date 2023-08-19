@@ -1,7 +1,20 @@
+<?php
+  $error=explode("¨",urldecode($values['error']));
+?>
 <link rel="stylesheet" href=<?php echo base_url("css/Nouvelle_ONG.css");?> >
 <title>Inscription ONG</title>
 <center><h1>Inscription ONG</h1></center>
 <div class="content">
+  <?php if($error[0]!=="No error"){ ?>
+    <div class="error">
+      <fieldset>
+        <legend><h3>Error</h3></legend>
+        <?php for ($i=0; $i < count($error); $i++) { ?>
+          <p style='color: red;'><?php echo $error[$i] ?></p>
+        <?php } ?>
+      </fieldset>
+    </div>
+  <?php } ?>
   <!-- A propos de l'ONG -->
   <form action=<?php echo site_url("Ong_mere/inserereOngMere");?> method="post">
     <fieldset>
@@ -16,7 +29,7 @@
               Nationalite : <input type="text" name="nationalite" class="country" data-suggestions=".country-suggestions">
               <ul class="resultContainer country-suggestions"></ul>
           </p>
-          
+
           <p>Numero d'enregistrement : <input type="text" name="numeroEnregistrement" list="a"></p>
           Objectifs statuaires : <textarea name="objectifStatuaire" id="" cols="30" rows="1"></textarea>
           <p>Domaine d'activites : <input type="text" name="domaineActivite"></p>
@@ -33,7 +46,6 @@
           Effectifs des membres : <input type="number" name="effectifMembres">
           <p>Mode de donations financieres : <input type="text" name="modeDonationFinanciere"></p>
           <p>Organigramme de l'organisation : <input type="text" name="organigramme"></p>
-          <center><button type="submit">Suivant</button></center><br>
           <p id="huhu"></p>
     </fieldset>
 
@@ -141,6 +153,7 @@
               <p>Liste des moyens humains:</p><textarea name="lshumain" cols="30" rows="1"></textarea>
               <p>Moyens materiels: </p><textarea name="materiels" cols="30" rows="1"></textarea>
     </fieldset>
+    <center><button type="submit">Suivant</button></center><br>
   </form>
 </div>
 <script src=<?php echo base_url("Js/jquery.js");?>></script>
