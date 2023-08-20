@@ -16,7 +16,7 @@
 | environments.
 |
 */
-$config['base_url'] = 'http://localhost/Ong_manager/';
+$config['base_url'] = 'http://localhost/ONG_Manager/';
 
 /*
 |--------------------------------------------------------------------------

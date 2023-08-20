@@ -1,3 +1,13 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inscription ONG</title>
+</head>
+<body>
+
 <?php
   $error=explode("¨",urldecode($values['error']));
 ?>
@@ -6,14 +16,12 @@
 <center><h1>Inscription ONG</h1></center>
 <div class="content">
   <?php if($error[0]!=="No error"){ ?>
-    <div class="error">
-      <fieldset>
+      <fieldset class="error">
         <legend><h3>Error</h3></legend>
         <?php for ($i=0; $i < count($error); $i++) { ?>
-          <p style='color: red;'><?php echo $error[$i] ?></p>
+          <p style='color: red;'><?php echo $error[$i]; ?></p>
         <?php } ?>
       </fieldset>
-    </div>
   <?php } ?>
   <!-- A propos de l'ONG -->
   <form action=<?php echo site_url("Ong_mere/inserereOngMere");?> method="post">
@@ -26,7 +34,7 @@
           <p>Ne doit pas depasser la date aujourd'hui</p>
 
           <p>
-              Nationalite : <input type="text" name="nationalite" class="country" data-suggestions=".country-suggestions">
+              Nationalite : <input type="text" name="nationaliteONG" class="country" data-suggestions=".country-suggestions">
               <ul class="resultContainer country-suggestions"></ul>
           </p>
 
@@ -44,8 +52,8 @@
       </fieldset>
 
           Effectifs des membres : <input type="number" name="effectifMembres">
-          <p>Mode de donations financieres : <input type="text" name="modeDonationFinanciere"></p>
-          <p>Organigramme de l'organisation : <input type="text" name="organigramme"></p>
+          Mode de donations financieres : <input type="text" name="modeDonationFinanciere">
+          Organigramme de l'organisation : <input type="text" name="organigramme">
           <p id="huhu"></p>
     </fieldset>
 
@@ -53,27 +61,27 @@
 
     <fieldset>
       <legend><h2>President</h2></legend>
-              <p>Nom : <input type="text" name="nom" id=""></p>
-              <p>Prenom : <input type="text" name="prenom" id=""></p>
-              Date de naissance : <input type="date" name="dateNaissance" id="">
+              <p>Nom : <input type="text" name="nom[]" id=""></p>
+              <p>Prenom : <input type="text" name="prenom[]" id=""></p>
+              Date de naissance : <input type="date" name="dateNaissance[]" id="">
               <p>Date non valide</p>
-              <p>Lieu de naissance : <input type="text" name="lieuNaissance" id=""></p>
+              <p>Lieu de naissance : <input type="text" name="lieuNaissance[]" id=""></p>
               <p>
-                  Nationalite : <input type="text" name="nationalite" class="country" autocomplete="off" data-suggestions=".country-suggestions">
+                  Nationalite : <input type="text" name="nationaliteIndividu[]" class="country" autocomplete="off" data-suggestions=".country-suggestions">
                   <ul class="resultContainer country-suggestions"></ul>
               </p>
               <fieldset><legend>Situation matrimoniale</legend>
                   <?php foreach($values['situationMatrimoniale'] as $sm) { ?>
-                      <p><input type="radio" name="idSituationMatrimoniale" value="<?php echo $sm->idSituationMatrimoniale;?>"><?php echo $sm->designation;?></p>
+                      <p><input type="radio" name="idSituationMatrimoniale[]" value="<?php echo $sm->idSituationMatrimoniale;?>"><?php echo $sm->designation;?></p>
                   <?php } ?>
               </fieldset>
-              <p>Adresse personelle : <input type="text" name="adressePersonelle" id=""></p>
-              <p>Emploi : <input type="text" name="emploi" id=""></p>
-              <p>Societe employeur : <input type="text" name="societeEmployeur" id=""></p>
-              <p>Experience dans le domaine humanitaire : <textarea name="experienceHumanitaire" id="" cols="30" rows="1"></textarea></p>
-              Telephone : <input type="text" name="telephone_president" id="">
+              <p>Adresse personelle : <input type="text" name="adressePersonelle[]" id=""></p>
+              <p>Emploi : <input type="text" name="emploi[]" id=""></p>
+              <p>Societe employeur : <input type="text" name="societeEmployeur[]" id=""></p>
+              <p>Experience dans le domaine humanitaire : <textarea name="experienceHumanitaire[]" id="" cols="30" rows="1"></textarea></p>
+              Telephone : <input type="text" name="telephone[]" id="">
               <p>Numero de telephone invalide</p>
-              Mail : <input type="mail" name="mail_president" id="">
+              Mail : <input type="mail" name="mail[]" id="">
               <p>Adresse email invalide</p>
     </fieldset>
 
@@ -81,27 +89,27 @@
 
     <fieldset>
       <legend><h2>Representant</h2></legend>
-              <p>Nom : <input type="text" name="nom" id=""></p>
-              <p>Prenom : <input type="text" name="prenom" id=""></p>
-              Date de naissance : <input type="date" name="dateNaissance" id="">
+              <p>Nom : <input type="text" name="nom[]" id=""></p>
+              <p>Prenom : <input type="text" name="prenom[]" id=""></p>
+              Date de naissance : <input type="date" name="dateNaissance[]" id="">
               <p>Date non valide</p>
-              <p>Lieu de naissance : <input type="text" name="lieuNaissance" id=""></p>
+              <p>Lieu de naissance : <input type="text" name="lieuNaissance[]" id=""></p>
               <p>
-                  Nationalite : <input type="text" name="nationalite" class="country" autocomplete="off" data-suggestions=".country-suggestions">
+                  Nationalite : <input type="text" name="nationaliteIndividu[]" class="country" autocomplete="off" data-suggestions=".country-suggestions">
                   <ul class="resultContainer country-suggestions"></ul>
               </p>
               <fieldset><legend>Situation matrimoniale</legend>
                   <?php foreach($values['situationMatrimoniale'] as $sm) { ?>
-                      <p><input type="radio" name="idSituationMatrimoniale" value="<?php echo $sm->idSituationMatrimoniale;?>"><?php echo $sm->designation;?></p>
+                      <p><input type="radio" name="idSituationMatrimoniale[]" value="<?php echo $sm->idSituationMatrimoniale;?>"><?php echo $sm->designation;?></p>
                   <?php } ?>
               </fieldset>
-              <p>Adresse personelle : <input type="text" name="adressePersonelle" id=""></p>
-              <p>Emploi : <input type="text" name="emploi" id=""></p>
-              <p>Societe employeur : <input type="text" name="societeEmployeur" id=""></p>
-              <p>Experience dans le domaine humanitaire : <textarea name="experienceHumanitaire" id="" cols="30" rows="1"></textarea></p>
-              Telephone : <input type="text" name="telephone_representant" id="">
+              <p>Adresse personelle : <input type="text" name="adressePersonelle[]" id=""></p>
+              <p>Emploi : <input type="text" name="emploi[]" id=""></p>
+              <p>Societe employeur : <input type="text" name="societeEmployeur[]" id=""></p>
+              <p>Experience dans le domaine humanitaire : <textarea name="experienceHumanitaire[]" id="" cols="30" rows="1"></textarea></p>
+              Telephone : <input type="text" name="telephone[]" id="">
               <p>Numero de telephone invalide</p>
-              Mail : <input type="mail" name="mail_representant" id="">
+              Mail : <input type="mail" name="mail[]" id="">
               <p>Adresse email invalide</p>
     </fieldset>
 
@@ -153,7 +161,7 @@
               <p>Liste des moyens humains:</p><textarea name="lshumain" cols="30" rows="1"></textarea>
               <p>Moyens materiels: </p><textarea name="materiels" cols="30" rows="1"></textarea>
     </fieldset>
-    <center><button type="submit">Suivant</button></center><br>
+    <center><button type="submit">Valider</button></center><br>
   </form>
 </div>
 <script src=<?php echo base_url("Js/jquery.js");?>></script>
@@ -229,3 +237,5 @@ jQuery(document).ready(function() {
     }
 
 </script>
+</body>
+</html>

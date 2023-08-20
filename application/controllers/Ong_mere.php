@@ -11,6 +11,8 @@
         }
 
         public function index($error="No error"){
+            $er=$this->input->get("error");
+            if($er!=null){$error=$er;}
             $region = $this->Ong_mere_model->getTableValue("Region","des_region",$this->suggest('region'));
             $District = $this->Ong_mere_model->getTableValue("District","des_fiv",$this->suggest('district'));
             $fokotany = $this->Ong_mere_model->getTableValue("Fokotany","Fokotany_anarany",$this->suggest('fokotany'));
@@ -51,70 +53,32 @@
 
         public function inserereOngMere(){
             $this->load->helper("function");
-            $name=array('denomination','dateDeCreation','nationalite','numeroEnregistrement'
+            $name=array('denomination','dateDeCreation','nationaliteONG','numeroEnregistrement'
             ,'objectifStatuaire','domaineActivite','effectifMembres','modeDonationFinanciere'
             ,'organigramme');
             $data=namepost($name);
-
+            $president=getDataIndividu(0);
+            $representant=getDataIndividu(1);
+            $errorPresident=getErrorIndividu(0); $errorRepresentant=getErrorIndividu(1);
             $paysIntervenants = $this->input->post('Autres_pays_d_intervention');
-            $error=fusion(emptyTable($data, $name), getErrorDate($name));
-            var_dump($error);
-            $error=implode("¨",$error);
-            if($error===""){
+            $error=fusion(emptyTable($data, $name), getErrorDate($data,$name));
+            $error=fusion($error,$errorPresident); $error=fusion($error,$errorRepresentant);
+            $error=implode("¨",$error);echo $error;
+            ini_set('display_errors', '0');
+            
+            if(!$error){
                 $this->db->trans_begin();
-
                 $this->Ong_mere_model->insert('ONGMere', $data);
+                $this->db->trans_complete();
                 $idlastONG = $this->Ong_mere_model->getLast('ONGMere')['idONGMere'];
-                $this->insertPaysinterventions($idlastONG, $paysIntervenants);
-
-                redirect(site_url('Ong_mere/presidentForm/'.$idlastONG));
+                $president["idONGMere"]=$idlastONG;
+                $this->Ong_mere_model->insert('Individu', $president);
+                $this->db->trans_complete();
+                $representant["idONGMere"]=$idlastONG;
+                $this->Ong_mere_model->insert('Individu', $representant);
+                $this->db->trans_complete();
             }
-            else{redirect(site_url('Ong_mere/index/'.$error));}
-        }
-
-        public function presidentForm($idOngMere){
-            $idlastONG = $this->Ong_mere_model->getLast('ONGMere')['idONGMere'];
-            $data['lastong'] = $idlastONG;
-            $data['fonctionString'] = ['President et representant', 'President'];
-            $data['fonction'] = [21, 11];
-            $data['situationMatrimoniale'] = $this->Ong_mere_model->select('SituationMatrimoniale');
-            $data['idONGMere'] = $idOngMere;
-            $this->load->view("Menu");
-            $this->load->view('Individu', $data);
-        }
-
-        public function insereIndividu(){
-            $data['idONGMere'] = $this->input->post('idONGMere');
-            $data['nom'] = $this->input->post('nom');
-            $data['prenom'] = $this->input->post('prenom');
-            $data['dateDeNaissance'] = $this->input->post('dateDeNaissance');
-            $data['lieuNaissance'] = $this->input->post('lieuNaissance');
-            $data['nationalite'] = $this->input->post('nationalite');
-            $data['idSituationMatrimoniale'] = $this->input->post('idSituationMatrimoniale');
-            $data['adressePersonelle '] = $this->input->post('adressePersonelle');
-            $data['emploi'] = $this->input->post('emploi');
-            $data['societeEmployeur'] = $this->input->post('societeEmployeur');
-            $data['adresseEmployeur '] = $this->input->post('adresseEmployeur');
-            $data['experienceHumanitaire'] = $this->input->post('experienceHumanitaire');
-            $data['telephone'] = $this->input->post('telephone');
-            $data['mail'] = $this->input->post('mail');
-
-            // $idlastONG = $this->Ong_mere_model->getLast('ONGMere')['idONGMere'];
-            // echo $idlastONG;
-            echo $data['idONGMere'];
-
-
-            $this->Ong_mere_model->insert('Individu', $data);
-
-            // $individuRole['idIndividu'] = $this->Ong_mere_model->getLast('Individu')['idIndividu'];
-            // echo $individuRole['idIndividu'];
-            // $individuRole['fonction'] = $this->input->post('role');
-            // $individuRole['idONGMere'] = $this->input->post('idONGMere');
-
-            // $this->Ong_mere_model->insert('IndividuRole', $individuRole);
-
-            $this->db->trans_commit();
-
+            else{redirect(site_url("Ong_mere/index?error=$error"));exit;}
         }
     }
 ?>
