@@ -1,13 +1,17 @@
 const inputs = document.querySelectorAll("input");
 
 const patterns = {
-    telephone_president: /^(?=.{5,20}$)[0-9+\- ]+$/,
-    telephone_representant: /^(?=.{5,20}$)[0-9+\- ]+$/,
-    mail_president: /^[\w\.-]+@[\w\.-]+\.\w+$/,
-    mail_representant: /^[\w\.-]+@[\w\.-]+\.\w+$/
+    telephone0: /^(?=.{5,20}$)[0-9+\- ]+$/,
+    telephone1: /^(?=.{5,20}$)[0-9+\- ]+$/,
+    mail0: /^[\w\.-]+@[\w\.-]+\.\w+$/,
+    mail1: /^[\w\.-]+@[\w\.-]+\.\w+$/
 }
 
-// Validation function
+/**
+ * Check if the param correspond in his proper give regex
+ * @param {*} field 
+ * @param {*} regex 
+ */
 function checking(field, regex){
     if(is_date(field)){
         is_valid_date(field);
@@ -22,14 +26,22 @@ function checking(field, regex){
     }
 }
 
+
 inputs.forEach((input) =>{
     input.addEventListener("input", (e) =>{
-        checking(e.target, patterns[e.target.getAttribute("name")]);
+        let rem = '[]';
+        let name = e.target.getAttribute("name");
+        name = name.replace(rem, '');
+        checking(e.target, patterns[name]);
     });
 });
 
-/* if input is date then do not validate the date if user sets it for tomorrow */
 
+/**
+ * Check if the param is a data
+ * @param {*} date 
+ * @returns boolean, true if param is date otherwise false
+ */
 function is_date(date){
     let result = false;
     if(!isNaN(Date.parse(date.value))){
@@ -38,6 +50,10 @@ function is_date(date){
     return result;
 }
 
+/**
+ * Check if the date inputed do not exceed today date, if so the input is not valid
+ * @param {*} date 
+ */
 function is_valid_date(date){
     let daty = new Date(date.value);
     let current_date = new Date();
@@ -47,6 +63,4 @@ function is_valid_date(date){
     else{
         date.className = "valid";
     }
-
-
 }

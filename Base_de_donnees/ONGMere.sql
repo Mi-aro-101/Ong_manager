@@ -2,7 +2,7 @@ create table ONGMere(
     idONGMere INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
     denomination VARCHAR(40),
     dateDeCreation DATE not null,
-    nationalite VARCHAR(50) not null,
+    nationaliteONG VARCHAR(50) not null,
     numeroEnregistrement VARCHAR(50) not null,
     objectifStatuaire VARCHAR(200) not null,
     domaineActivite VARCHAR(40) not null,
@@ -29,7 +29,7 @@ create table Individu(
     prenom VARCHAR(50) not null,
     dateDeNaissance DATE not null,
     lieuNaissance VARCHAR(50) not null,
-    nationalite VARCHAR(50) not null,
+    nationaliteIndividu VARCHAR(50) not null,
     idSituationMatrimoniale INTEGER not null REFERENCES SituationMatrimoniale (idSituationMatrimoniale),
     adressePersonelle VARCHAR(50) not null,
     emploi VARCHAR(50) default null,
@@ -44,7 +44,7 @@ create table IndividuRole(
     idIndividuRole INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
     idIndividu INT NOT NULL REFERENCES Individu(idIndividu),
     idONGMere INT NOT NULL REFERENCES ONGMere(idONGMere),
-    fonction INT NOT NULL
+    fonction INT NOT NULL --0 President et 1 pour representant
 );
 
 create table Projet(
