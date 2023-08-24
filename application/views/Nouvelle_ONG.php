@@ -119,11 +119,11 @@
 
     <fieldset>
       <legend><h2>Objectif</h2></legend>
-              <p>Titre du projet: <input type="text" name="titre"></p>
-              <p>Objectif principal: <input type="text" name="principal"></p>
-              <p>Objectifs specifiques:</p><textarea name="specific" cols="30" rows="1"></textarea>
-              <p>Activite1: <input type="text" name="activite"></p>
-              <p>Resultats attendues:</p><textarea name="resultats" cols="30" rows="1"></textarea>
+              <p>Titre du projet: <input type="text" name="titreDuProjet"></p>
+              <p>Objectif principal: <input type="text" name="objectifPrincipal"></p>
+              <p>Objectifs specifiques:</p><textarea name="objectifSpecifique" cols="30" rows="1"></textarea>
+              <p>Activite: <input type="text" name="activite"></p>
+              <p>Resultats attendues:</p><textarea name="resultatsAttendues" cols="30" rows="1"></textarea>
               <p class='region'>region: <input type='text' name='region' value=""></input></p>
                   <div class="resultContainer suggestregion">
                     <ul>
@@ -157,10 +157,10 @@
                     </ul>
                   </div>
               </p>
-              <p>Population beneficiaire: <input type="text" name="population"></p>
+              <p>Population beneficiaire: <input type="text" name="populationBeneficiaire"></p>
               <p>Cout estimatif: <input type="number" name="cout" min=0></p>
-              <p>Source de financement: <input type="text" name="source"></p>
-              <p>Liste des moyens humains:</p><textarea name="lshumain" cols="30" rows="1"></textarea>
+              <p>Source de financement: <input type="text" name="financement"></p>
+              <p>Liste des moyens humains:</p><textarea name="moyensHumain" cols="30" rows="1"></textarea>
               <p>Moyens materiels: </p><textarea name="materiels" cols="30" rows="1"></textarea>
     </fieldset>
     <center><button type="submit">Valider</button></center><br>
