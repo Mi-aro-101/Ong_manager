@@ -66,21 +66,44 @@
             $error=implode("¨",$error);echo $error;
             ini_set('display_errors', '0');
             
+            
             if(!$error){
                 $this->db->trans_begin();
                 
                 $this->Ong_mere_model->insert('ONGMere', $data);
-                $this->db->trans_complete();
                 $idlastONG = $this->Ong_mere_model->getLast('ONGMere')['idONGMere'];
+                $president['idONGMere'] = $idlastONG;
+                $representant['idONGMere'] = $idlastONG;
+
                 $president["idONGMere"]=$idlastONG;
                 $this->Ong_mere_model->insert('Individu', $president);
-                $this->db->trans_complete();
+                $idlastPresident = $this->Ong_mere_model->getLast('Individu')['idIndividu'];
+
                 $representant["idONGMere"]=$idlastONG;
                 $this->Ong_mere_model->insert('Individu', $representant);
+                $idlastRepresentant = $this->Ong_mere_model->getLast('Individu')['idIndividu'];
+
+                $this->insertIndividuRole($idlastONG, $idlastPresident, $idlastRepresentant);
 
                 $this->db->trans_complete();
             }
             else{redirect(site_url("Ong_mere/index?error=$error"));exit;}
+        }
+
+        public function insertIndividuRole($lastONG, $idP, $idR){
+            // insert individi role president
+            $individuRole0['idIndividu'] = $idP;
+            $individuRole0['idONGMere'] = $lastONG;
+            $individuRole0['fonction'] = 0;
+            echo $idP;
+            echo $idR;
+            $this->Ong_mere_model->insert($individuRole0, 'IndividuRole');
+
+            // insert individu role representant
+            $individuRole1['idIndividu'] = $idR;
+            $individuRole1['idONGMere'] = $lastONG;
+            $individuRole1['fonction'] = 1;
+            $this->Ong_mere_model->insert($individuRole1, 'IndividuRole');
         }
     }
 ?>

@@ -92,12 +92,19 @@
         //SPECIFIC FUNCTION FOR HELPING INSERT INDIVIDU
         function getDataIndividu($ind){
             $index=((int)$ind)%2;
-            $name=array('nom','prenom','dateNaissance'
+            $name=array('nom','prenom','dateDeNaissance'
             ,'lieuNaissance','nationaliteIndividu','idSituationMatrimoniale','adressePersonelle'
-            ,'emploi','societeEmployeur', 'experienceHumanitaire', 'telephone',
+            ,'emploi','societeEmployeur', 'adresseEmployeur','experienceHumanitaire', 'telephone',
             'mail');
-            $data=namepost($name);
-            $data=insertPosition($data,$name, $index);
+            $data=namepostIndividu($name, $ind);
+            return $data;
+        }
+
+        function namepostIndividu($name, $ind){
+            $data=array();
+            for ($i=0; $i < count($name); $i++) {
+                $data[$name[$i]]=getPost($name[$i].$ind);
+            }
             return $data;
         }
 

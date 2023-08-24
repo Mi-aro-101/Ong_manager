@@ -44,7 +44,7 @@ create table IndividuRole(
     idIndividuRole INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
     idIndividu INT NOT NULL REFERENCES Individu(idIndividu),
     idONGMere INT NOT NULL REFERENCES ONGMere(idONGMere),
-    fonction INT NOT NULL
+    fonction INT NOT NULL --0 President et 1 pour representant
 );
 
 create table Projet(

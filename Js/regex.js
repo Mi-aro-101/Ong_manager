@@ -1,8 +1,10 @@
 const inputs = document.querySelectorAll("input");
 
 const patterns = {
-    telephone: /^(?=.{5,20}$)[0-9+\- ]+$/,
-    mail: /^[\w\.-]+@[\w\.-]+\.\w+$/
+    telephone0: /^(?=.{5,20}$)[0-9+\- ]+$/,
+    telephone1: /^(?=.{5,20}$)[0-9+\- ]+$/,
+    mail0: /^[\w\.-]+@[\w\.-]+\.\w+$/,
+    mail1: /^[\w\.-]+@[\w\.-]+\.\w+$/
 }
 
 /**
