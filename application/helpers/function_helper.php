@@ -13,7 +13,7 @@
         function vide($value, $name){
             $valiny=strtoupper(splitMe($name));
             if($value===""){
-                return "Vous devez remplir <strong>$valiny</strong>pour pouvoir continuer";}
+                return "Vous devez remplir le champ <strong>$valiny</strong>pour pouvoir continuer";}
             return false;
         }
 

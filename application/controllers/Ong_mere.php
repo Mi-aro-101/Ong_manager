@@ -95,15 +95,13 @@
             $individuRole0['idIndividu'] = $idP;
             $individuRole0['idONGMere'] = $lastONG;
             $individuRole0['fonction'] = 0;
-            echo $idP;
-            echo $idR;
-            $this->Ong_mere_model->insert($individuRole0, 'IndividuRole');
+            $this->Ong_mere_model->insert('IndividuRole', $individuRole0);
 
             // insert individu role representant
             $individuRole1['idIndividu'] = $idR;
             $individuRole1['idONGMere'] = $lastONG;
             $individuRole1['fonction'] = 1;
-            $this->Ong_mere_model->insert($individuRole1, 'IndividuRole');
+            $this->Ong_mere_model->insert('IndividuRole', $individuRole1);
         }
     }
 ?>
