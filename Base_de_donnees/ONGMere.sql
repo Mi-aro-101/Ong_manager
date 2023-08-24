@@ -37,7 +37,7 @@ create table Individu(
     adresseEmployeur VARCHAR(50) default null,
     experienceHumanitaire VARCHAR(200) default null,
     telephone VARCHAR(30) not null,
-    mail VARCHAR(50) not null,
+    mail VARCHAR(50) not null
 );
 
 create table IndividuRole(

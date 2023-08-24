@@ -56,20 +56,23 @@
             $name=array('denomination','dateDeCreation','nationaliteONG','numeroEnregistrement'
             ,'objectifStatuaire','domaineActivite','effectifMembres','modeDonationFinanciere'
             ,'organigramme');
+            $obj=array('titreDuProjet','objectifPrincipal','objectifSpecifique','activite','resultatsAttendues','region'
+            ,'district','fokotany','populationBeneficiaire','cout','financement','moyensHumain','materiels');
             $data=namepost($name);
+            $objdata=namepost($obj);
             $president=getDataIndividu(0);
             $representant=getDataIndividu(1);
             $errorPresident=getErrorIndividu(0); $errorRepresentant=getErrorIndividu(1);
             $paysIntervenants = $this->input->post('Autres_pays_d_intervention');
             $error=fusion(emptyTable($data, $name), getErrorDate($data,$name));
             $error=fusion($error,$errorPresident); $error=fusion($error,$errorRepresentant);
+            $error=fusion($error,emptyTable($objdata, $obj));
             $error=implode("¨",$error);echo $error;
-            ini_set('display_errors', '0');
-            
-            
+
+
             if(!$error){
                 $this->db->trans_begin();
-                
+
                 $this->Ong_mere_model->insert('ONGMere', $data);
                 $idlastONG = $this->Ong_mere_model->getLast('ONGMere')['idONGMere'];
                 $president['idONGMere'] = $idlastONG;
@@ -82,6 +85,7 @@
                 $representant["idONGMere"]=$idlastONG;
                 $this->Ong_mere_model->insert('Individu', $representant);
                 $idlastRepresentant = $this->Ong_mere_model->getLast('Individu')['idIndividu'];
+                $this->Ong_mere_model->insert('Objectif', $objdata);
 
                 $this->insertIndividuRole($idlastONG, $idlastPresident, $idlastRepresentant);
 
