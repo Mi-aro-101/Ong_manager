@@ -68,6 +68,7 @@
             
             if(!$error){
                 $this->db->trans_begin();
+                
                 $this->Ong_mere_model->insert('ONGMere', $data);
                 $this->db->trans_complete();
                 $idlastONG = $this->Ong_mere_model->getLast('ONGMere')['idONGMere'];
@@ -76,6 +77,7 @@
                 $this->db->trans_complete();
                 $representant["idONGMere"]=$idlastONG;
                 $this->Ong_mere_model->insert('Individu', $representant);
+
                 $this->db->trans_complete();
             }
             else{redirect(site_url("Ong_mere/index?error=$error"));exit;}
