@@ -67,12 +67,12 @@ create table Projet(
 
 create table moyenHumain(
     idMoyenHumain INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    idONGMere INT NOT NULL REFERENCES ONGMere(idONGMere),
+    idProjet INT NOT NULL REFERENCES Projet(idProjet),
     designationHumain VARCHAR(50) NOT NULL
 );
 
 create table moyenMateriel(
     idMoyenMateriel INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    idONGMere INT NOT NULL REFERENCES ONGMere(idONGMere),
+    idProjet INT NOT NULL REFERENCES Projet(idProjet),
     designationMateriel VARCHAR(50) NOT NULL
 );

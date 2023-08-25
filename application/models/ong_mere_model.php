@@ -107,6 +107,7 @@
         */
         public function insert($table, $data){
             $result = $this->db->insert($table, $data);
+            echo $table.'<br>';
             return $result;
         }
 
