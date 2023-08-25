@@ -20,6 +20,10 @@
             $values["values"]=array("error"=>$error,"region"=>$region, "district"=>$District, "fokotany"=>$fokotany, 'situationMatrimoniale'=>$situationMatrimoniale);
             $this->load->view("Nouvelle_ONG", $values);
         }
+
+        /**
+         * Function that take the input and get in the model if any in db correspond the input then return the corresponding
+         */
         public function suggestCountry(){
             $countrySuggestion =  $_POST["query"];
 
@@ -36,13 +40,20 @@
             $this->output->set_output(json_encode(['suggestions' => $suggestions]));
         }
 
-
+        /**
+         * Same as below
+         */
         public function suggest($postName){
             $valiny=$this->input->post($postName);
             if($valiny==""){return "pppp";}
             return $valiny;
         }
 
+        /**
+         * As PaysIntervention is another table we need to get all of them in the view to insert to the db
+         * @param integer $idLastONG
+         * @param array $pays all the pays got from input
+         */
         public function insertPaysinterventions($idlastONG, $pays){
             $data['idONGMere'] = $idlastONG;
             foreach($pays as $intervenants){
@@ -51,6 +62,9 @@
             }
         }
 
+        /**
+         * Called after submit of the form
+         */
         public function inserereOngMere(){
             $this->load->helper("function");
             $name=array('denomination','dateDeCreation','nationaliteONG','numeroEnregistrement'
@@ -75,6 +89,10 @@
 
                 $this->Ong_mere_model->insert('ONGMere', $data);
                 $idlastONG = $this->Ong_mere_model->getLast('ONGMere')['idONGMere'];
+                // Insertion des pays d'intervention
+                $this->insertPaysinterventions($idlastONG, $_POST['Autres_pays_d_intervention']);
+
+                // Pour insertion d'individu
                 $president['idONGMere'] = $idlastONG;
                 $representant['idONGMere'] = $idlastONG;
 
@@ -94,6 +112,12 @@
             else{redirect(site_url("Ong_mere/index?error=$error"));exit;}
         }
 
+        /**
+         * Insert each individu in the form in their proper correspondant table value
+         * @param integer $lastONG
+         * @param integer $idP is the id corresponding to the id of the president
+         * @param integer $idR is the id corresponding to the id of the president
+         */
         public function insertIndividuRole($lastONG, $idP, $idR){
             // insert individi role president
             $individuRole0['idIndividu'] = $idP;

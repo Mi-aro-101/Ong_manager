@@ -49,11 +49,11 @@
                   Autres pays d'intervention : <input type="text" name="Autres_pays_d_intervention[]" class="intervenant" data-suggestions=".intervenant-suggestions">
                   <ul class="resultContainer intervenant-suggestions"></ul>
               </p>
-      </fieldset>
+      </fieldset><br>
 
-          Effectifs des membres : <input type="number" name="effectifMembres" value="2">
-          Mode de donations financieres : <input type="text" name="modeDonationFinanciere" value="Ariary">
-          Organigramme de l'organisation : <input type="text" name="organigramme" value="None">
+          Effectifs des membres : <input type="number" name="effectifMembres" value="2"><p></p>
+          Mode de donations financieres : <input type="text" name="modeDonationFinanciere" value="Ariary"><p></p>
+          Organigramme de l'organisation : <input type="text" name="organigramme" value="None"><p></p>
           <p id="huhu"></p>
     </fieldset>
 
