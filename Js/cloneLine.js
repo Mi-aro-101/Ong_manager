@@ -13,10 +13,10 @@ function addButtonToRow(row) {
     row.appendChild(deleteButton);
 }
 
-function cloneRow() {
+function cloneRow(formfield, rowtoclone) {
     // get a reference to the table and the row you want to clone
-    var form = document.querySelector(".partenaire");
-    var rowToClone = document.querySelector(".intervenants");
+    var form = document.querySelector("."+formfield);
+    var rowToClone = document.querySelector("."+rowtoclone);
     var clonedRow = rowToClone.cloneNode(true);
     form.appendChild(clonedRow);
     addButtonToRow(clonedRow);

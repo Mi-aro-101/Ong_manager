@@ -44,7 +44,7 @@
 
           <fieldset class="partenaire">
               <legend><h3>Autres pays intervenants</h3></legend>
-              <button type="button" onclick="cloneRow()">+</button>
+              <button type="button" onclick="cloneRow('partenaire', 'intervenants')">+</button>
               <p class="intervenants">
                   Autres pays d'intervention : <input type="text" name="Autres_pays_d_intervention[]" class="intervenant" data-suggestions=".intervenant-suggestions">
                   <ul class="resultContainer intervenant-suggestions"></ul>
@@ -118,13 +118,24 @@
     <!-- Objectifs -->
 
     <fieldset>
-      <legend><h2>Objectif</h2></legend>
-              <p>Titre du projet: <input type="text" name="titreDuProjet"></p>
-              <p>Objectif principal: <input type="text" name="objectifPrincipal"></p>
-              <p>Objectifs specifiques:</p><textarea name="objectifSpecifique" cols="30" rows="1"></textarea>
-              <p>Activite: <input type="text" name="activite"></p>
-              <p>Resultats attendues:</p><textarea name="resultatsAttendues" cols="30" rows="1"></textarea>
-              <p class='region'>region: <input type='text' name='region' value=""></input></p>
+      <legend><h2>Projet</h2></legend>
+              <p>Titre du projet: <input type="text" name="titre" value="Kalalaos"></p>
+              <p>Objectif principal: <input type="text" name="objectifPrincipal" value="Mampifaly"></p>
+              <p>Objectifs specifiques:</p><textarea name="objectifSpecifique" cols="30" rows="1">Fun</textarea>
+              <p>Activite: <input type="text" name="activite" value="Tsy misy"></p>
+              <p>Resultats attendues:</p><textarea name="resultatAttendu" cols="30" rows="1">People have fun</textarea>
+              <p class='region'>province: <input type='text' name='province' value="Antananarivo"></input></p>
+                  <div class="resultContainer suggestprovince">
+                    <ul>
+                        <?php for ($i=0; $i < count($values["province"]); $i++) { ?>
+                            <li>
+                                <?php echo $values["province"][$i]["des_province"]; ?>
+                          </li>
+                        <?php } ?>
+                    </ul>
+                  </div>
+              </p>
+              <p class='region'>region: <input type='text' name='region' value="Analamanga"></input></p>
                   <div class="resultContainer suggestregion">
                     <ul>
                         <?php for ($i=0; $i < count($values["region"]); $i++) { ?>
@@ -135,33 +146,56 @@
                     </ul>
                   </div>
               </p>
-              <p class='district'>district: <input type='text' name='district' value=""></input></p>
+              <p class='district'>district: <input type='text' name='district' value="Atsimondrano"></input></p>
                   <div class="resultContainer suggestdistrict">
                     <ul>
                         <?php for ($i=0; $i < count($values["district"]); $i++) { ?>
                             <li>
-                                <?php echo $values["district"][$i]["des_fiv"]; ?>
+                                <?php echo $values["district"][$i]["des_district"]; ?>
                           </li>
                         <?php } ?>
                     </ul>
                   </div>
               </p>
-              <p class='fokotany'>fokotany: <input type='text' name='fokotany' value=""></input></p>
+              <p class='district'>commune: <input type='text' name='commune' value="Bemasoandro"></input></p>
+                  <div class="resultContainer suggestcommune">
+                    <ul>
+                        <?php for ($i=0; $i < count($values["commune"]); $i++) { ?>
+                            <li>
+                                <?php echo $values["commune"][$i]["des_commune"]; ?>
+                          </li>
+                        <?php } ?>
+                    </ul>
+                  </div>
+              </p>
+              <p class='fokotany'>fokotany: <input type='text' name='fokotany' value="Ambohidahy"></input></p>
                   <div class="resultContainer suggestfokotany">
                     <ul>
                         <?php for ($i=0; $i < count($values["fokotany"]); $i++) { ?>
                             <li>
-                                <?php echo $values["fokotany"][$i]["Fokotany_anarany"]; ?>
+                                <?php echo $values["fokotany"][$i]["des_fokotany"]; ?>
                           </li>
                         <?php } ?>
                     </ul>
                   </div>
               </p>
-              <p>Population beneficiaire: <input type="text" name="populationBeneficiaire"></p>
-              <p>Cout estimatif: <input type="number" name="cout" min=0></p>
-              <p>Source de financement: <input type="text" name="financement"></p>
-              <p>Liste des moyens humains:</p><textarea name="moyensHumain" cols="30" rows="1"></textarea>
-              <p>Moyens materiels: </p><textarea name="materiels" cols="30" rows="1"></textarea>
+              <p>Population beneficiaire: <input type="text" name="populationBeneficiaire" value="Malagasy"></p>
+              <p>Cout estimatif: <input type="number" name="coutEstimatif" min=0 value="3000000000"></p>
+              <p>Source de financement: <input type="text" name="sourceDefinancement" value="Entreprise"></p>
+              <fieldset class="moyen_humain">
+                <legend><h3>Liste des moyens humains : </h3></legend>
+                <button type="button" onclick="cloneRow('moyen_humain', 'humain')">+</button>
+                <p class="humain">
+                    Moyen humain : <input type="text" name="moyensHumain[]">
+                </p>
+              </fieldset><br>
+              <fieldset class="moyen_materiel">
+                <legend><h3>Liste des moyens materiel : </h3></legend>
+                <button type="button" onclick="cloneRow('moyen_materiel', 'materiel')">+</button>
+                <p class="materiel">
+                    Moyen materiel : <input type="text" name="moyensMateriel[]">
+                </p>
+              </fieldset><br>
     </fieldset>
     <center><button type="submit">Valider</button></center><br>
   </form>
@@ -212,6 +246,8 @@ jQuery(document).ready(function() {
     suggest('district');
     suggest('region');
     suggest('fokotany');
+    suggest('province');
+    suggest('commune');
     function suggest(namepost){
         const temp=document.createElement('div');
         let oldHtml=document.documentElement.innerHTML;

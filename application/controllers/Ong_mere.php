@@ -14,10 +14,20 @@
             $er=$this->input->get("error");
             if($er!=null){$error=$er;}
             $region = $this->Ong_mere_model->getTableValue("Region","des_region",$this->suggest('region'));
-            $District = $this->Ong_mere_model->getTableValue("District","des_fiv",$this->suggest('district'));
-            $fokotany = $this->Ong_mere_model->getTableValue("Fokotany","Fokotany_anarany",$this->suggest('fokotany'));
+            $District = $this->Ong_mere_model->getTableValue("District","des_district",$this->suggest('district'));
+            $fokotany = $this->Ong_mere_model->getTableValue("Fokontany","des_fokotany",$this->suggest('fokotany'));
+            $province = $this->Ong_mere_model->getTableValue("Province","des_province",$this->suggest('province'));
+            $commune = $this->Ong_mere_model->getTableValue("Commune","des_commune",$this->suggest('commune'));
             $situationMatrimoniale = $this->Ong_mere_model->select('SituationMatrimoniale');
-            $values["values"]=array("error"=>$error,"region"=>$region, "district"=>$District, "fokotany"=>$fokotany, 'situationMatrimoniale'=>$situationMatrimoniale);
+            $values["values"]=array(
+                "error"=>$error,
+                "region"=>$region, 
+                "district"=>$District, 
+                "fokotany"=>$fokotany, 
+                'situationMatrimoniale'=>$situationMatrimoniale,
+                "province"=>$province,
+                "commune" =>$commune
+            );
             $this->load->view("Nouvelle_ONG", $values);
         }
 
@@ -63,6 +73,20 @@
         }
 
         /**
+         * Insertion moyen humains ou materiel
+         * @param array $ressource is the array of data
+         * @param integer $idLastProjet
+         * @param string $designation design it is a humain ou materiel moyen
+         */
+        public function insertmoyen($ressource, $idLastProjet, $designation){
+            $data['idProjet'] = $idLastProjet;
+            foreach($ressource as $moyen){
+                $data['designation'.$designation] = $moyen;
+                $this->Ong_mere_model->insert('moyen'.$designation, $data);
+            }
+        }
+
+        /**
          * Called after submit of the form
          */
         public function inserereOngMere(){
@@ -70,8 +94,8 @@
             $name=array('denomination','dateDeCreation','nationaliteONG','numeroEnregistrement'
             ,'objectifStatuaire','domaineActivite','effectifMembres','modeDonationFinanciere'
             ,'organigramme');
-            $obj=array('titreDuProjet','objectifPrincipal','objectifSpecifique','activite','resultatsAttendues','region'
-            ,'district','fokotany','populationBeneficiaire','cout','financement','moyensHumain','materiels');
+            $obj=array('titre','objectifPrincipal','objectifSpecifique','activite','resultatAttendu', 'province', 'region'
+            ,'district','fokotany', 'commune', 'populationBeneficiaire','coutEstimatif','sourceDefinancement');
             $data=namepost($name);
             $objdata=namepost($obj);
             $president=getDataIndividu(0);
@@ -82,7 +106,6 @@
             $error=fusion($error,$errorPresident); $error=fusion($error,$errorRepresentant);
             $error=fusion($error,emptyTable($objdata, $obj));
             $error=implode("¨",$error);echo $error;
-
 
             if(!$error){
                 $this->db->trans_begin();
@@ -103,9 +126,22 @@
                 $representant["idONGMere"]=$idlastONG;
                 $this->Ong_mere_model->insert('Individu', $representant);
                 $idlastRepresentant = $this->Ong_mere_model->getLast('Individu')['idIndividu'];
-                $this->Ong_mere_model->insert('Objectif', $objdata);
 
                 $this->insertIndividuRole($idlastONG, $idlastPresident, $idlastRepresentant);
+                
+                //Insertion Projet
+                $objdata['idONGMere'] = $idlastONG;
+                $this->Ong_mere_model->insert('Projet', $objdata);
+
+                //get last Projet
+                $idlastProjet = $this->Ong_mere_model->getLast('Projet')['idProjet'];
+
+
+                // Insert moyen humain[]
+                $this->insertmoyen($_POST['moyensHumain'], $idlastProjet, 'Humain');
+
+                // // Insert moyen materiel[]
+                $this->insertmoyen($_POST['moyensMateriel'], $idlastProjet, 'Materiel');
 
                 $this->db->trans_complete();
             }
